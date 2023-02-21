@@ -8,13 +8,15 @@ import ScheduleForm from './components/userInfo/ScheduleForm';
 import Search from './components/Search';
 import { FetchingData } from './components/userInfo/FetchingData';
 import DisplayPlaylistTable from './components/suggestedPlaylist/DisplayPlaylistTable';
+import FetchingDataFromNode from './components/suggestedPlaylist/FetchingDataFromNode';
 
 
 function App() {
   return (
     <div className="App overflow-hidden">
       
-      <DisplayPlaylistTable />
+      {/* <DisplayPlaylistTable /> */}
+      <FetchingDataFromNode />
       {/* <ScheduleForm /> */}
       {/* <FetchingData /> */}
       {/* <Header />
