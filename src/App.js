@@ -16,8 +16,8 @@ function App() {
     <div className="App overflow-hidden">
       
       {/* <DisplayPlaylistTable /> */}
-      <FetchingDataFromNode />
-      {/* <ScheduleForm /> */}
+      {/* <FetchingDataFromNode /> */}
+      <ScheduleForm  />
       {/* <FetchingData /> */}
       {/* <Header />
       <Hero />

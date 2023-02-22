@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DateMomentUtils from '@date-io/moment';
 import {
     TimePicker,
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import { FetchingData } from './FetchingData';
+import FetchingDataFromNode from '../suggestedPlaylist/FetchingDataFromNode';
 
 function ScheduleForm() {
 
@@ -18,12 +19,7 @@ function ScheduleForm() {
         endTime: new Date(),
     })
 
-    // function handleSubmit(event) {
-    //     event.preventDefault();
-    //     // Do something with the activity name and time values
-    //     console.log(`Activity Name: ${activityName}, Activity Start Time: ${startTime}, Activity End Time: ${endTime}`);
-    // }
-
+    const [message, setmessage] = useState({});
 
     let name, value;
     const postUserData = (event) => {
@@ -50,8 +46,18 @@ function ScheduleForm() {
                     endTime,
                 })
             }
+
         );
 
+        fetch("http://localhost:8000/message")
+            .then((res) => res.json())
+            .then((jsonData) => {
+                setmessage(jsonData);
+                // console.log(jsonData['Football']);
+            })
+
+
+        // <ScheduleForm onSubmit={this.fetchData} />
         if (res) {
             setUserData({
                 activityName: "",
@@ -71,7 +77,7 @@ function ScheduleForm() {
         <div className="scheduleForm px-4 my-32 w-auto mx-auto space-y-6 font-serif">
 
             <form onSubmit={submitData} className="px-4 my-32 max-w-3xl mx-auto space-y-6" method='POST'>
-                <h1 className='text-3xl font-semibold'>User Schedule</h1>
+                <h1 className='text-3xl font-semibold'>User Schedule:</h1>
                 <div className='ActivityName '>
                     <label>
                         Activity Name:
@@ -89,7 +95,7 @@ function ScheduleForm() {
                         Start Time:
                         <div className='border border-gray-400 w-1/3 py-2 px-4 block rounded focus:outline-none focus:border-teal-500'>
                             <MuiPickersUtilsProvider utils={DateMomentUtils}>
-                                <TimePicker value={userData.startTime} onChange={date => {setUserData({...userData, startTime: date})}} name='startTime' />
+                                <TimePicker value={userData.startTime} onChange={date => { setUserData({ ...userData, startTime: date }) }} name='startTime' />
                             </MuiPickersUtilsProvider>
                         </div>
                     </label>
@@ -101,7 +107,7 @@ function ScheduleForm() {
                         </div>
                         <div className='border border-gray-400 w-1/3 py-2 px-4 block rounded focus:outline-none focus:border-teal-500'>
                             <MuiPickersUtilsProvider utils={DateMomentUtils}>
-                                <TimePicker value={userData.endTime} onChange={date => {setUserData({...userData, endTime: date})}} name='endTime' />
+                                <TimePicker value={userData.endTime} onChange={date => { setUserData({ ...userData, endTime: date }) }} name='endTime' />
                             </MuiPickersUtilsProvider>
                         </div>
                     </label>
@@ -111,7 +117,21 @@ function ScheduleForm() {
                 </div>
             </form>
 
+            <h1 className='text-3xl font-semibold ml-3'>Your Activites:</h1>
             <FetchingData />
+            <div>
+                <div>
+                    <h1 className='text-3xl font-semibold mt-20 ml-3'>
+                        Customised Playlist For You:
+                    </h1>
+                </div>
+                {message != null ?
+                    <FetchingDataFromNode data={message} />
+                    :
+                    <FetchingDataFromNode />
+                }
+                {/* <FetchingDataFromNode data={message} /> */}
+            </div>
         </div>
     )
 }

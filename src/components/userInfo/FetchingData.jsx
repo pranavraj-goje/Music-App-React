@@ -46,7 +46,7 @@ export class FetchingData extends React.Component {
                             return (
 
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4">{index}</td>
+                                    <td class="px-6 py-4">{index+1}</td>
                                     <td class="px-6 py-4">{rowD.data.activityName}</td>
                                     <td class="px-6 py-4">{rowD.data.startTime}</td>
                                     <td class="px-6 py-4">{rowD.data.endTime}</td>
